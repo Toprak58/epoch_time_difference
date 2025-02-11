@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <time.h>
+
+// Tarih ve saat bilgilerini saklayan struct
+struct TarihSaat {
+    int yil, ay, gun, saat, dakika, saniye;
+};
+
+// Union tanımlaması (Bellek optimizasyonu için kullanılabilir)
+union Zaman {
+    struct TarihSaat ts;
+    time_t epoch;
+};
+
+// Kullanıcıdan tarih ve saat girişi al
+void tarihSaatGir(union Zaman *z) {
+    printf("Yil, Ay, Gun, Saat, Dakika, Saniye giriniz (YYYY MM DD HH MM SS): ");
+    scanf("%d %d %d %d %d %d", &z->ts.yil, &z->ts.ay, &z->ts.gun, &z->ts.saat, &z->ts.dakika, &z->ts.saniye);
+}
+
+// Tarih ve saat bilgisini epoch zamanına çevir
+time_t epochHesapla(union Zaman *z) {
+    struct tm zamanStruct = {0};
+    zamanStruct.tm_year = z->ts.yil - 1900;
+    zamanStruct.tm_mon = z->ts.ay - 1;
+    zamanStruct.tm_mday = z->ts.gun;
+    zamanStruct.tm_hour = z->ts.saat;
+    zamanStruct.tm_min = z->ts.dakika;
+    zamanStruct.tm_sec = z->ts.saniye;
+    return mktime(&zamanStruct);
+}
+
+int main() {
+    union Zaman zaman1, zaman2;
+    
+    printf("Birinci tarihi giriniz:\n");
+    tarihSaatGir(&zaman1);
+    zaman1.epoch = epochHesapla(&zaman1);
+    
+    printf("\nIkinci tarihi giriniz:\n");
+    tarihSaatGir(&zaman2);
+    zaman2.epoch = epochHesapla(&zaman2);
+    
+    printf("\nBirinci zamanin Epoch karsiligi: %ld\n", zaman1.epoch);
+    printf("Ikinci zamanin Epoch karsiligi: %ld\n", zaman2.epoch);
+    
+    // Zaman farkını hesapla
+    double fark = difftime(zaman2.epoch, zaman1.epoch);
+    printf("Iki tarih arasindaki fark: %.0f saniye (%.2f saat)\n", fark, fark / 3600.0);
+    
+    return 0;
+}
