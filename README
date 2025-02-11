@@ -1,0 +1,51 @@
+Açıklama:
+Bu C programı, kullanıcının girdiği iki farklı tarih ve saat için zaman farkını hesaplar ve her iki tarihin epoch zamanını (Unix zaman damgası) ekrana yazdırır. Ayrıca, struct ve union kullanarak zaman bilgilerini işler.
+
+Program, tarih ve saat verilerini struct DateTime içinde tutar ve bu bilgileri union DateTimeUnion kullanarak epoch zamanına dönüştürür.
+
+Epoch Nedir?
+Epoch (Unix zaman damgası veya POSIX zamanı), 1 Ocak 1970, 00:00:00 UTC'yi referans alarak geçen saniye sayısını ifade eder. Bu sistem, zaman dilimlerinin farklılıklarını göz ardı eder ve sadece saniyeler üzerinden hesaplama yapar. Çoğu modern bilgisayar ve yazılım sisteminde tarih ve saat hesaplamalarında kullanılan bir standarttır.
+
+Epoch zamanı, time_t veri tipi ile ifade edilir ve genellikle zaman diliminden bağımsız olarak dünya çapında sabittir. Bu yüzden tarih ve saat hesaplamaları yapmak için çok yaygın bir yöntemdir.
+
+Programın Çalışma Prensibi:
+Program, kullanıcıdan iki farklı tarih ve saat bilgisini alır.
+Bu tarih ve saatler, struct DateTime içinde tutulur.
+union DateTimeUnion ile bu bilgiler epoch zamanına dönüştürülür.
+İki tarih arasındaki fark hesaplanır.
+Program, her iki tarihin epoch zamanını ve aralarındaki farkı ekrana yazdırır.
+Kullanıcı Girişi:
+Program, yıl, ay, gün, saat, dakika ve saniye bilgilerini kullanıcıdan alır.
+Örnek:
+sh
+Kopyala
+Düzenle
+Enter first date and time:
+Enter year: 2023
+Enter month: 12
+Enter day: 25
+Enter hour: 10
+Enter minute: 30
+Enter second: 0
+
+Enter second date and time:
+Enter year: 2025
+Enter month: 2
+Enter day: 11
+Enter hour: 14
+Enter minute: 45
+Enter second: 0
+Çıktı:
+sh
+Kopyala
+Düzenle
+Epoch time for the first date: 1703502600
+Epoch time for the second date: 1749584700
+Time difference in seconds: 46022100 seconds
+Not:
+Programda kullanılan mktime fonksiyonu, verilen tarihi epoch zamanına dönüştürür.
+difftime fonksiyonu ise iki epoch zaman arasındaki farkı saniye cinsinden hesaplar.
+Yapılabilecek Geliştirmeler:
+Tarih ve saat formatları üzerinde daha fazla doğrulama yapılabilir.
+Kullanıcı dostu hata mesajları eklenebilir.
+Tarih ve saat formatlarının farklı sistemlere göre özelleştirilebilmesi sağlanabilir.
